@@ -16,5 +16,16 @@ connection.connect((err) => {
     console.log('connected as id ' + connection.threadId);
 
     //add functions in here (remember to use connection.end())
-    
+    inquire();
 });
+
+function inquire() {
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "What would you like to do?",
+            name: "choice",
+            choices: ["View All Employees", "View All Employees by Department", "View All Employees by Manager", "Add Employee", "Remove Employee", "Update Employee Role", "Update Employee Manager", "View All Roles"]
+        },
+    ])
+}
