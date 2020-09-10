@@ -54,11 +54,11 @@ INSERT INTO role (title, salary, department_id)
 VALUES ("Lawyer", 125000, 4);
 
 -- Here I am creating the different employees names role_id and manager_id
-INSERT INTO department (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Ben", "Benson", 999, 999);
-INSERT INTO department (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("John", "Johnson", 999, 999);
-INSERT INTO department (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Mike", "Michaels", 999, 999);
-INSERT INTO department (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Lars", "Larson", 999, 999);-- not sure what to do with role_id and manager_id yet
