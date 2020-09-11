@@ -125,7 +125,7 @@ function removeEmployee() {
             }]).then(choice => {
                 connection.query('DELETE FROM employee WHERE id = ' + choice.remove, function(err, res) {
                 if (err) throw err;
-                // console.table(res);
+                else console.log("Employee Successfully Removed!");
                 inquire();
             })
         })
@@ -133,7 +133,35 @@ function removeEmployee() {
 }
 
 function updateRole() {
-    // connection.query('UPDATE role SET title="" WHERE department=""')
+    // connection.query('SELECT first_name, last_name, id FROM employee', function(err, res) {
+    //     console.table(res);
+    //     if (err) throw err;
+    //     const employee = res
+    //     const employeeArr = []
+    //     for (var i = 0; i < employee.length; i++) {
+    //     //this loop variable will store both the name and the id, the id is how we will capture and delete the row while the name will be used in the inquirer prompt
+    //     const loop = {
+    //         name:(res[i].first_name + ' ' + res[i].last_name),
+    //         value: res[i].id
+    //         }
+    //     employeeArr.push(loop);
+    //     }
+        
+    //     inquirer.prompt([{
+    //         type: "list",
+    //         message: "Please choose an employee to update.",
+    //         choices: employeeArr,
+    //         name: "update"
+    //         }]).then(choice => {
+    //             //I need to figure out what to do with my role_id to then be able to change roles for employees
+    //             //then I will have another inquirer prompt to let the user choose which role to be added to the employee
+    //             connection.query('UPDATE employee SET role="" WHERE id = ' + choice.update, function(err, res) {
+    //             if (err) throw err;
+    //             else console.log("Employee Successfully Updated!");
+    //             inquire();
+    //         })
+    //     })
+    // })
 }
 
 function updateManager() {
