@@ -47,22 +47,53 @@ function inquire() {
         }
     })
 }
-
+//this one is finished----------------------------------------
 function viewAllEmployees() {
-    const employee = "SELECT * FROM employee"
-    connection.query(employee, function(err, res) {
+    const stringQuery = "SELECT first_name, last_name, role.title, role.salary, department.department FROM employee INNER JOIN role ON employee.role_id = role.title_id INNER JOIN department ON employee.department_id = department.id";
+    connection.query(stringQuery, function(err, res) {
         if (err) throw err;
-        console.table(res);
+        else console.table(res);
         inquire();
-    }) 
+    })
 }
-
+//this one is finished------------------------------------------
 function viewAllEmployeesByDepartment() {
-    const department = "SELECT * FROM department"
-    connection.query(department, function(err, res) {
-        if (err) throw err;
-        console.table(res);
-        inquire();
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "What department would you like to view?",
+            name: "department",
+            choices: ["Sales", "Engineering", "Finance", "Legal"]
+        }
+    ]).then(answer => {
+        if (answer.department === "Sales") {
+            connection.query('SELECT first_name, last_name, department.department FROM employee INNER JOIN department ON employee.department_id = department.id WHERE department.department = "Sales"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.department === "Engineering") {
+            connection.query('SELECT first_name, last_name, department.department FROM employee INNER JOIN department ON employee.department_id = department.id WHERE department.department = "Engineering"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.department === "Finance") {
+            connection.query('SELECT first_name, last_name, department.department FROM employee INNER JOIN department ON employee.department_id = department.id WHERE department.department = "Finance"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.department === "Legal") {
+            connection.query('SELECT first_name, last_name, department.department FROM employee INNER JOIN department ON employee.department_id = department.id WHERE department.department = "Legal"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }     
     })
 }
 
@@ -70,6 +101,9 @@ function viewAllEmployeesByManager() {
     //need to assign manager ids and such before writing this function
 }
 
+
+//This add employee function is finished except for adding a manager
+//for the list prompts I added an object into the choices so it will save the choice to a number which is technically the id's for connecting the tables
 function addEmployee() {
     inquirer.prompt([
         {
@@ -83,9 +117,50 @@ function addEmployee() {
             name: "last_name"
         },
         {
-            type: "input",
+            type: "list",
             message: "What is the employees role?",
-            name: "role"
+            name: "role",
+            choices: [
+                {
+                    name: ["Sales Associate"],
+                    value: ["2"]
+                },
+                {
+                    name: ["Software Engineer"],
+                    value: ["4"]
+                },
+                {
+                    name: ["Accountant"],
+                    value: ["5"]
+                },
+                {
+                    name: ["Lawyer"],
+                    value: ["7"]
+                }
+            ]
+        },
+        {
+            type: "list",
+            message: "What is the employees role?",
+            name: "department",
+            choices: [
+                {
+                    name: ["Sales"],
+                    value: ["1"]
+                },
+                {
+                    name: ["Engineer"],
+                    value: ["2"]
+                },
+                {
+                    name: ["Finance"],
+                    value: ["3"]
+                },
+                {
+                    name: ["Legal"],
+                    value: ["4"]
+                }
+            ]
         },
         {
             type: "input",
@@ -93,7 +168,7 @@ function addEmployee() {
             name: "manager"
         }
     ]).then(answer => {
-        connection.query('INSERT INTO employee SET ?', {first_name:answer.first_name, last_name:answer.last_name, role_id:answer.role, manager_id:answer.manager}, function (err, res) {
+        connection.query('INSERT INTO employee SET ?', {first_name:answer.first_name, last_name:answer.last_name, role_id:answer.role, department_id:answer.department, manager_id:answer.manager}, function (err, res) {
             if (err) throw err;
             // console.table(res);
             inquire();
