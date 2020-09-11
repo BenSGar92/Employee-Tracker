@@ -244,10 +244,62 @@ function updateManager() {
 }
 
 function viewAllRoles() {
-    const role = "SELECT * FROM role"
-    connection.query(role, function(err, res) {
-        if (err) throw err;
-        console.table(res);
-        inquire();
-    }) 
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "What role would you like to view?",
+            name: "role",
+            choices: ["Sales Lead", "Sales Associate", "Lead Engineering", "Software Engineer", "Accountant", "Legal Team Lead", "Lawyer"]
+        }
+    ]).then(answer => {
+        if (answer.role === "Sales Lead") {
+            connection.query('SELECT first_name, last_name, role.title, role.salary FROM employee INNER JOIN role ON employee.role_id = role.title_id WHERE role.title = "Sales Lead"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.role === "Sales Associate") {
+            connection.query('SELECT first_name, last_name, role.title, role.salary FROM employee INNER JOIN role ON employee.role_id = role.title_id WHERE role.title = "Sales Associate"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.role === "Lead Engineer") {
+            connection.query('SELECT first_name, last_name, role.title, role.salary FROM employee INNER JOIN role ON employee.role_id = role.title_id WHERE role.title = "Lead Engineer"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.role === "Software Engineer") {
+            connection.query('SELECT first_name, last_name, role.title, role.salary FROM employee INNER JOIN role ON employee.role_id = role.title_id WHERE role.title = "Software Engineer"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.role === "Accountant") {
+            connection.query('SELECT first_name, last_name, role.title, role.salary FROM employee INNER JOIN role ON employee.role_id = role.title_id WHERE role.title = "Accountant"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.role === "Legal Team Lead") {
+            connection.query('SELECT first_name, last_name, role.title, role.salary FROM employee INNER JOIN role ON employee.role_id = role.title_id WHERE role.title = "Legal Team Lead"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+        else if (answer.role === "Lawyer") {
+            connection.query('SELECT first_name, last_name, role.title, role.salary FROM employee INNER JOIN role ON employee.role_id = role.title_id WHERE role.title = "Lawyer"', function(err, res) {
+                if (err) throw err;
+                console.table(res);
+                inquire();
+            })
+        }
+    })
 }
