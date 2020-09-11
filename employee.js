@@ -95,55 +95,56 @@ function addEmployee() {
     ]).then(answer => {
         connection.query('INSERT INTO employee SET ?', {first_name:answer.first_name, last_name:answer.last_name, role_id:answer.role, manager_id:answer.manager}, function (err, res) {
             if (err) throw err;
-            console.log(res);
+            // console.table(res);
+            inquire();
           });
     })
 }
 
-
-//this one I need help with, trying to let the user select an employee and then capture that selection and delete that employee
-//I tried making loop a global variable but that did not work
-// const loop = ''
 function removeEmployee() {
-    connection.query('SELECT first_name, last_name FROM employee', function(err, res) {
+    //this will query the employee table and return the 3 parameters below
+    connection.query('SELECT first_name, last_name, id FROM employee', function(err, res) {
+        console.table(res);
         if (err) throw err;
         const employee = res
         const employeeArr = []
         for (var i = 0; i < employee.length; i++) {
-        const loop = (res[i].first_name + ' ' + res[i].last_name)
+        //this loop variable will store both the name and the id, the id is how we will capture and delete the row while the name will be used in the inquirer prompt
+        const loop = {
+            name:(res[i].first_name + ' ' + res[i].last_name),
+            value: res[i].id
+            }
         employeeArr.push(loop);
         }
         
-        // console.log(employeeArr)
         inquirer.prompt([{
             type: "list",
             message: "Please choose an employee to remove.",
             choices: employeeArr,
             name: "remove"
-        }]).then(choice => {
-            if (choice.remove === loop) {
-                //  connection.query('DELETE first_name, last_name FROM employee', function(err, res) {
-                //      if (err) throw err;
-                //      console.log(res);
-                //  })
-                console.log(loop)
-            }
+            }]).then(choice => {
+                connection.query('DELETE FROM employee WHERE id = ' + choice.remove, function(err, res) {
+                if (err) throw err;
+                // console.table(res);
+                inquire();
+            })
         })
     })
-
-
-
-    // connection.query('DELETE FROM employee SET ?', {}, function(err, res) {
-    //     if (err) throw err;
-    //     console.log(res);
-    // })
 }
 
 function updateRole() {
+    // connection.query('UPDATE role SET title="" WHERE department=""')
 }
 
 function updateManager() {
+    // connection.query('UPDATE employee SET manager_id="" WHERE...')
 }
 
 function viewAllRoles() {
+    const role = "SELECT * FROM role"
+    connection.query(role, function(err, res) {
+        if (err) throw err;
+        console.table(res);
+        inquire();
+    }) 
 }
