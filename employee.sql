@@ -57,18 +57,18 @@ VALUES ("Lawyer", 125000, 7);
 
 -- Here I am creating the different employees names role_id
 INSERT INTO employee (first_name, last_name, role_id, department_id)
-VALUES ("Ben", "Benson", 1, 1, null);
+VALUES ("Ben", "Benson", 1, 1);
 INSERT INTO employee (first_name, last_name, role_id, department_id)
-VALUES ("John", "Johnson", 2, 1, 1);
+VALUES ("John", "Johnson", 2, 1);
 INSERT INTO employee (first_name, last_name, role_id, department_id)
-VALUES ("Mike", "Michaels", 3, 2, null);
+VALUES ("Mike", "Michaels", 3, 2);
 INSERT INTO employee (first_name, last_name, role_id, department_id)
-VALUES ("Lars", "Larson", 4, 2, 2);
+VALUES ("Lars", "Larson", 4, 2);
 INSERT INTO employee (first_name, last_name, role_id, department_id)
-VALUES ("Jackie", "Jackson", 5, 3, null);
+VALUES ("Jackie", "Jackson", 5, 3);
 INSERT INTO employee (first_name, last_name, role_id, department_id)
-VALUES ("Bill", "Williams", 6, 4, 3);
+VALUES ("Bill", "Williams", 6, 4);
 INSERT INTO employee (first_name, last_name, role_id, department_id)
-VALUES ("Sam", "Samson", 7, 4, null);
+VALUES ("Sam", "Samson", 7, 4);
 INSERT INTO employee (first_name, last_name, role_id, department_id)
-VALUES ("Timo", "Werner", 4, 2, 4);
+VALUES ("Timo", "Werner", 4, 2);
