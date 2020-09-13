@@ -24,25 +24,21 @@ function inquire() {
             type: "list",
             message: "What would you like to do?",
             name: "choice",
-            choices: ["View All Employees", "View All Employees by Department", "View All Employees by Manager", "Add Employee", "Remove Employee", "Update Employee Role", "Update Employee Manager", "View All Roles", "All Done"]
+            choices: ["View All Employees", "View All Employees by Department", "Add Employee", "Remove Employee", "Update Employee Role", "View All Employees by Role", "All Done"]
         },
     ]).then(choice => {
         if (choice.choice === "View All Employees") {
             viewAllEmployees();
         } else if (choice.choice === "View All Employees by Department") {
             viewAllEmployeesByDepartment();
-        } else if (choice.choice === "View All Employees by Manager") {
-            viewAllEmployeesByManager();
+        } else if (choice.choice === "View All Employees by Role") {
+            viewAllRoles();
         } else if (choice.choice === "Add Employee") {
             addEmployee();
         } else if (choice.choice === "Remove Employee") {
             removeEmployee();
         } else if (choice.choice === "Update Employee Role") {
             updateRole();
-        } else if (choice.choice === "Update Employee Manager") {
-            updateManager();
-        } else if (choice.choice === "View All Roles") {
-            viewAllRoles();
         } else connection.end()
     })
 }
@@ -96,12 +92,6 @@ function viewAllEmployeesByDepartment() {
     })
 }
 
-function viewAllEmployeesByManager() {
-    //need to assign manager ids and such before writing this function
-}
-
-
-//This add employee function is finished except for adding a manager
 //for the list prompts I added an object into the choices so it will save the choice to a number which is technically the id's for connecting the tables
 function addEmployee() {
     inquirer.prompt([
@@ -160,14 +150,9 @@ function addEmployee() {
                     value: ["4"]
                 }
             ]
-        },
-        {
-            type: "input",
-            message: "Who is the employees manager?",
-            name: "manager"
         }
     ]).then(answer => {
-        connection.query('INSERT INTO employee SET ?', {first_name:answer.first_name, last_name:answer.last_name, role_id:answer.role, department_id:answer.department, manager_id:answer.manager}, function (err, res) {
+        connection.query('INSERT INTO employee SET ?', {first_name:answer.first_name, last_name:answer.last_name, role_id:answer.role, department_id:answer.department}, function (err, res) {
             if (err) throw err;
             // console.table(res);
             inquire();
@@ -178,7 +163,7 @@ function addEmployee() {
 function removeEmployee() {
     //this will query the employee table and return the 3 parameters below
     connection.query('SELECT first_name, last_name, id FROM employee', function(err, res) {
-        console.table(res);
+        // console.table(res);
         if (err) throw err;
         const employee = res
         const employeeArr = []
@@ -267,7 +252,7 @@ function updateRole() {
                 name: "department"
             }
         ]).then(choice => {
-            console.log(choice.role, choice.department, choice.update)
+            // console.log(choice.role, choice.department, choice.update)
 
                 connection.query('UPDATE employee SET role_id = ' + choice.role + ' , department_id = ' + choice.department + ' WHERE id = ' + choice.update, function(err, res) {
                 if (err) throw err;
@@ -278,10 +263,6 @@ function updateRole() {
         })
     })
     })
-}
-
-function updateManager() {
-    // connection.query('UPDATE employee SET manager_id="" WHERE...')
 }
 
 function viewAllRoles() {
