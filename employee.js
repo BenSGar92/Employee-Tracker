@@ -208,8 +208,8 @@ function removeEmployee() {
 
 function updateRole() {
     //this will query the employee table and return the 3 parameters below
-    connection.query('SELECT first_name, last_name, role_id from employee', function(err, res) {
-        console.table(res);
+    connection.query('SELECT first_name, last_name, id from employee', function(err, res) {
+        // console.table(res);
         if (err) throw err;
         const employee = res
         const employeeArr = []
@@ -217,12 +217,12 @@ function updateRole() {
         //this loop variable will store both the name and the id, the id is how we will capture and delete the row while the name will be used in the inquirer prompt
         const loop = {
             name:(res[i].first_name + ' ' + res[i].last_name),
-            value: res[i].role_id
+            value: res[i].id
             }
         employeeArr.push(loop);
         }
         connection.query('SELECT title, title_id from role', function(err, res) {
-            console.table(res);
+            // console.table(res);
             if (err) throw err;
             const role = res
             const roleArr = []
@@ -234,8 +234,19 @@ function updateRole() {
                 }
             roleArr.push(loop2);
             }
-        
-        //need to assign an await to these prompts, also need to make sure I'm targeting the right employee
+            connection.query('SELECT department, id from department', function(err, res) {
+                // console.table(res);
+                if (err) throw err;
+                const department = res
+                const departmentArr = []
+                for (var i = 0; i < department.length; i++) {
+                //this loop variable will store both the department and the id, the value is what we will replace the row with while the name will be used in the inquirer prompt
+                const loop3 = {
+                    name: res[i].department,
+                    value: res[i].id
+                    }
+                departmentArr.push(loop3);
+                }
         inquirer.prompt([
             {
                 type: "list",
@@ -248,26 +259,24 @@ function updateRole() {
                 message: "Please choose a role to assign.",
                 choices: roleArr,
                 name: "role"
+            },
+            {
+                type: "list",
+                message: "What department is that role in?",
+                choices: departmentArr,
+                name: "department"
             }
         ]).then(choice => {
-            // console.log(choice.update) this is equal to 7
-            console.log(choice.role)
+            console.log(choice.role, choice.department, choice.update)
 
-                connection.query('UPDATE employee SET role_id = ' + choice.role + 'INNER JOIN employee ON role.title_id = employee.role_id WHERE' + choice.update, function(err, res) {
+                connection.query('UPDATE employee SET role_id = ' + choice.role + ' , department_id = ' + choice.department + ' WHERE id = ' + choice.update, function(err, res) {
                 if (err) throw err;
                 else console.log("Employee Successfully Updated!");
-                // inquire();
-            
-            
-            
-            
-                // connection.query('UPDATE role SET title = ' + choice.role + ' INNER JOIN role ON employee.role_id = role.title_id WHERE title_id = ' + choice.update, function(err, res) {
-                // if (err) throw err;
-                // else console.log("Employee Successfully Updated!");
-                // // inquire();
+                inquire();
             })
         })
         })
+    })
     })
 }
 
