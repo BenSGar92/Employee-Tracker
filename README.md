@@ -9,6 +9,8 @@
 - [Contributing](#contributing)
 - [Test](#test)
 - [Questions](#questions)
+- [Video-Demo](#video-demo)
+- [Screenshot](#screenshot)
 - [License](#license)
 
 ## Description:
@@ -27,8 +29,10 @@
     For any questions about this application please reach out to me via github or email:
     Email:bensgar92@gmail.com
     Github:bensgar92
-## Video Demo
+## Video-Demo
     https://drive.google.com/file/d/1RynNbkMirQhiE7A1wmBcyCKLMjmzbNc0/view?usp=sharing
+## Screenshot
+    ![image](https://user-images.githubusercontent.com/64799956/93540576-5429b080-f911-11ea-8ceb-fed4beab7501.png)
 ## License
     For more information about the License, click on the link below.
 
